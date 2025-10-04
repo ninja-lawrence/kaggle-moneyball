@@ -829,25 +829,25 @@ print("="*80)
 results_df = pd.DataFrame({
     'Model': list(results.keys()),
     'Train MAE': [results[m]['train_mae'] for m in results.keys()],
-    'Test MAE': [results[m]['cv_mae'] for m in results.keys()],
-    'Test RMSE': [results[m]['test_rmse'] for m in results.keys()],
-    'Test R²': [results[m]['test_r2'] for m in results.keys()]
+    'CV MAE': [results[m]['cv_mae'] for m in results.keys()],
+    'CV Std': [results[m]['cv_std'] for m in results.keys()],
+    'Train R²': [results[m]['train_r2'] for m in results.keys()]
 })
 
-results_df = results_df.sort_values('Test MAE')
+results_df = results_df.sort_values('CV MAE')
 print(results_df.to_string(index=False))
 
 best_model_name = results_df.iloc[0]['Model']
 best_model = models.get(best_model_name, None)
 
 print(f"\n🏆 BEST MODEL: {best_model_name}")
-print(f"   CV MAE: {results_df.iloc[0]['Test MAE']:.4f}")
-print(f"   Test RMSE: {results_df.iloc[0]['Test RMSE']:.4f}")
+print(f"   CV MAE: {results_df.iloc[0]['CV MAE']:.4f} ± {results_df.iloc[0]['CV Std']:.4f}")
+print(f"   Train MAE: {results_df.iloc[0]['Train MAE']:.4f}")
 print(f"   Test R²: {results_df.iloc[0]['Test R²']:.4f}")
 
 # Show improvement over baseline
 baseline_mae = results['Ridge']['cv_mae']
-best_mae = results_df.iloc[0]['Test MAE']
+best_mae = results_df.iloc[0]['CV MAE']
 improvement = ((baseline_mae - best_mae) / baseline_mae) * 100
 print(f"\n   Improvement over Ridge baseline: {improvement:.2f}%")
 
@@ -903,12 +903,12 @@ gs = fig.add_gridspec(3, 3, hspace=0.3, wspace=0.3)
 
 # 1. Model Comparison - MAE
 ax1 = fig.add_subplot(gs[0, 0])
-results_sorted = results_df.sort_values('Test MAE', ascending=True)
+results_sorted = results_df.sort_values('CV MAE', ascending=True)
 colors = ['#2ecc71' if i == 0 else '#3498db' for i in range(len(results_sorted))]
-ax1.barh(range(len(results_sorted)), results_sorted['Test MAE'], color=colors)
+ax1.barh(range(len(results_sorted)), results_sorted['CV MAE'], color=colors)
 ax1.set_yticks(range(len(results_sorted)))
 ax1.set_yticklabels(results_sorted['Model'])
-ax1.set_xlabel('Test MAE (Lower is Better)')
+ax1.set_xlabel('CV MAE (Lower is Better)')
 ax1.set_title('Model Performance Comparison', fontweight='bold')
 ax1.grid(True, alpha=0.3, axis='x')
 ax1.axvline(x=baseline_mae, color='r', linestyle='--', alpha=0.5, label='Baseline (Ridge)')
@@ -998,7 +998,7 @@ for name in ensemble_names:
 bars = ax7.bar(x_pos, ensemble_maes, color=colors_ens, alpha=0.7, edgecolor='black')
 ax7.set_xticks(x_pos)
 ax7.set_xticklabels(ensemble_names, rotation=45, ha='right', fontsize=9)
-ax7.set_ylabel('Test MAE')
+ax7.set_ylabel('CV MAE')
 ax7.set_title('Base Models vs Ensemble Methods', fontweight='bold')
 ax7.grid(True, alpha=0.3, axis='y')
 # Add value labels on bars
@@ -1072,9 +1072,9 @@ print("FINAL ANALYSIS SUMMARY")
 print("="*80)
 
 print(f"\n📊 BEST PERFORMING MODEL: {best_model_name}")
-print(f"   • CV MAE: {results[best_model_name]['cv_mae']:.4f} wins")
-print(f"   • Test RMSE: {results[best_model_name]['test_rmse']:.4f} wins")
-print(f"   • Test R²: {results[best_model_name]['test_r2']:.4f}")
+print(f"   • CV MAE: {results[best_model_name]['cv_mae']:.4f} ± {results[best_model_name]['cv_std']:.4f} wins")
+print(f"   • Train MAE: {results[best_model_name]['train_mae']:.4f} wins")
+print(f"   • Train R²: {results[best_model_name]['train_r2']:.4f}")
 print(f"   • Improvement over baseline: {improvement:.2f}%")
 
 print("\n🎯 KEY INSIGHTS:")
@@ -1089,7 +1089,7 @@ print("\n🔍 ENSEMBLE PERFORMANCE:")
 ensemble_results = results_df[results_df['Model'].str.contains('Ensemble|Blending')]
 if len(ensemble_results) > 0:
     for _, row in ensemble_results.iterrows():
-        print(f"   • {row['Model']}: MAE = {row['Test MAE']:.4f}")
+        print(f"   • {row['Model']}: MAE = {row['CV MAE']:.4f}")
 
 print("\n💡 RECOMMENDATIONS:")
 print("   1. Pythagorean wins and run differential are likely the strongest predictors")
@@ -1174,6 +1174,6 @@ if best_model is not None:
     print("\n   Use these predictions for your Kaggle submission!")
     
     # Optionally save predictions
-    # submission_df = pd.DataFrame({'ID': test_df.index, 'W': final_predictions})
-    # submission_df.to_csv('submission.csv', index=False)
-    # print("   Saved to: submission.csv")
+    submission_df = pd.DataFrame({'ID': test_df.index, 'W': final_predictions})
+    submission_df.to_csv('submission.csv', index=False)
+    print("   Saved to: submission.csv")
