@@ -284,6 +284,18 @@ y_train = train_df['W']
 X_test = test_df[available_features]
 # Note: test set doesn't have 'W' column - that's what we're predicting
 
+# Save the ID column from test set AFTER all processing for submission
+# This ensures the IDs match the exact rows we're making predictions for
+if 'ID' in test_df.columns:
+    test_ids = test_df['ID'].copy()
+    print(f"\n✓ Found ID column in test set")
+    print(f"  First few IDs: {test_ids.head().tolist()}")
+    print(f"  Total test IDs: {len(test_ids)}")
+else:
+    # Fallback: use pandas index if ID column doesn't exist
+    test_ids = test_df.index.copy()
+    print(f"\n⚠ No ID column found, using pandas index")
+
 print(f"\nFeature matrix shapes:")
 print(f"X_train: {X_train.shape}")
 print(f"X_test: {X_test.shape}")
@@ -767,7 +779,7 @@ if LIGHTGBM_AVAILABLE:
     print(f"   CV MAE: {results['Stacking (LGB Meta)']['cv_mae']:.4f}")
 
 # 5. BLENDING (Holdout-based ensemble)
-print(f"\n{'5' if not XGBOOST_AVAILABLE and not LIGHTGBM_AVAILABLE else '5-6'}. Blending (Holdout-based Ensemble)")
+print(f"\n5. Blending (Holdout-based Ensemble)")
 
 from sklearn.model_selection import train_test_split
 X_blend_train, X_blend_holdout, y_blend_train, y_blend_holdout = train_test_split(
@@ -843,7 +855,7 @@ best_model = models.get(best_model_name, None)
 print(f"\n🏆 BEST MODEL: {best_model_name}")
 print(f"   CV MAE: {results_df.iloc[0]['CV MAE']:.4f} ± {results_df.iloc[0]['CV Std']:.4f}")
 print(f"   Train MAE: {results_df.iloc[0]['Train MAE']:.4f}")
-print(f"   Test R²: {results_df.iloc[0]['Test R²']:.4f}")
+print(f"   Train R²: {results_df.iloc[0]['Train R²']:.4f}")
 
 # Show improvement over baseline
 baseline_mae = results['Ridge']['cv_mae']
@@ -963,12 +975,12 @@ ax5.grid(True, alpha=0.3)
 
 # 6. R² Comparison
 ax6 = fig.add_subplot(gs[1, 2])
-results_r2_sorted = results_df.sort_values('Test R²', ascending=True)
+results_r2_sorted = results_df.sort_values('Train R²', ascending=True)
 colors_r2 = ['#2ecc71' if i == len(results_r2_sorted)-1 else '#3498db' for i in range(len(results_r2_sorted))]
-ax6.barh(range(len(results_r2_sorted)), results_r2_sorted['Test R²'], color=colors_r2)
+ax6.barh(range(len(results_r2_sorted)), results_r2_sorted['Train R²'], color=colors_r2)
 ax6.set_yticks(range(len(results_r2_sorted)))
 ax6.set_yticklabels(results_r2_sorted['Model'])
-ax6.set_xlabel('Test R² (Higher is Better)')
+ax6.set_xlabel('Train R² (Higher is Better)')
 ax6.set_title('Model R² Comparison', fontweight='bold')
 ax6.grid(True, alpha=0.3, axis='x')
 
@@ -1162,18 +1174,38 @@ if OPTUNA_AVAILABLE:
     print(f"   • Best MAE: {study_gb.best_value:.4f}")
 
 # Optional: Create submission file
+# ===================== Kaggle Workflow =====================
+# 1. Split train.csv for validation ONLY
+# 2. Train/tune model using train/validation sets
+# 3. Use test.csv ONLY for final prediction and submission
+# 4. Submission file must use IDs from test.csv
+# ===========================================================
+
 if best_model is not None:
     print("\n📝 Creating predictions for submission...")
     final_predictions = best_model.predict(X_test_scaled)
-    
-    # Ensure predictions are reasonable (between 0 and 162 games)
     final_predictions = np.clip(final_predictions, 0, 162)
-    
     print(f"   • Mean prediction: {final_predictions.mean():.2f} wins")
     print(f"   • Prediction range: {final_predictions.min():.2f} to {final_predictions.max():.2f} wins")
     print("\n   Use these predictions for your Kaggle submission!")
-    
-    # Optionally save predictions
-    submission_df = pd.DataFrame({'ID': test_df.index, 'W': final_predictions})
+    # Check alignment and length of IDs and predictions
+    print(f"   test_ids length: {len(test_ids)}")
+    print(f"   final_predictions length: {len(final_predictions)}")
+    if len(test_ids) != len(final_predictions):
+        print(f"   ERROR: test_ids and predictions length mismatch!")
+        print(f"   test_ids sample: {test_ids[:5]}")
+        print(f"   predictions sample: {final_predictions[:5]}")
+    else:
+        print(f"   test_ids and predictions lengths match.")
+    # Convert predictions to integers as required by Kaggle
+    final_predictions_int = np.round(final_predictions).astype(int)
+    # Create submission file
+    submission_df = pd.DataFrame({'ID': test_ids, 'W': final_predictions_int})
+    submission_df['ID'] = submission_df['ID'].astype(int)
+    # Sort by ID for Kaggle
+    submission_df = submission_df.sort_values('ID').reset_index(drop=True)
     submission_df.to_csv('submission.csv', index=False)
     print("   Saved to: submission.csv")
+    print(f"   Submission shape: {submission_df.shape}")
+    print(f"   First few rows:\n{submission_df.head()}")
+    print(f"   Last few rows:\n{submission_df.tail()}")
