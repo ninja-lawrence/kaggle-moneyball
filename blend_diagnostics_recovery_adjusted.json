@@ -1,0 +1,21 @@
+{
+  "strategy": "single_model",
+  "original_blend_oof_mae": 2.781703658087841,
+  "adjusted_oof_mae": 2.7715078040442163,
+  "single_model_oof": {
+    "M1": 2.772390292449126,
+    "M2": 2.9863430463115397,
+    "M3": 2.7715078040442163
+  },
+  "adjusted_weights": [
+    0.0,
+    0.0,
+    1.0
+  ],
+  "calibration_offsets": {},
+  "config": {
+    "AUTO_DROP_WEAK_MODEL": true,
+    "SINGLE_MODEL_FALLBACK_MARGIN": 0.003,
+    "CALIBRATE_BY_DECADE": true
+  }
+}

@@ -1,0 +1,419 @@
+{
+  "adversarial_auc": 0.9999926903790769,
+  "feature_importances": [
+    [
+      "HA",
+      0.0019114658713799138
+    ],
+    [
+      "BBA",
+      0.001151265295381676
+    ],
+    [
+      "SB",
+      0.0009563420707668913
+    ],
+    [
+      "IPouts",
+      0.00043979552553730095
+    ],
+    [
+      "R_per_G",
+      0.0004154301224604806
+    ],
+    [
+      "2B",
+      0.00028020213538382244
+    ],
+    [
+      "3B",
+      0.00021441554707635202
+    ],
+    [
+      "BB_per_G",
+      0.0001888318738456629
+    ],
+    [
+      "RA_per_G",
+      0.00017908571261482376
+    ],
+    [
+      "BA",
+      0.00016933955138409562
+    ],
+    [
+      "AB",
+      0.00015350203938424567
+    ],
+    [
+      "SHO",
+      0.00014984722892263935
+    ],
+    [
+      "CG",
+      9.137026153815953e-05
+    ],
+    [
+      "K_per_9",
+      8.406064061516894e-05
+    ],
+    [
+      "R",
+      8.162410030743139e-05
+    ],
+    [
+      "OBP",
+      7.675101969206732e-05
+    ],
+    [
+      "WHIP",
+      5.2385616615135966e-05
+    ],
+    [
+      "DP",
+      4.5075995692145376e-05
+    ],
+    [
+      "HR_per_G",
+      4.5075995692145376e-05
+    ],
+    [
+      "ERA",
+      4.2639455384518854e-05
+    ],
+    [
+      "H_per_G",
+      3.776637476915479e-05
+    ],
+    [
+      "run_diff",
+      3.532983446130622e-05
+    ],
+    [
+      "E",
+      3.411156430754847e-05
+    ],
+    [
+      "ER",
+      3.289329415379072e-05
+    ],
+    [
+      "SO",
+      3.28932941536797e-05
+    ],
+    [
+      "HR",
+      3.0456753846053175e-05
+    ],
+    [
+      "OPS",
+      2.680194338455788e-05
+    ],
+    [
+      "run_diff_per_game",
+      2.192886276908279e-05
+    ],
+    [
+      "SOA",
+      1.7055782153718724e-05
+    ],
+    [
+      "SLG",
+      1.3400971692223429e-05
+    ],
+    [
+      "pyth_exp_183",
+      9.746161230617112e-06
+    ],
+    [
+      "RA",
+      4.873080615364067e-06
+    ],
+    [
+      "H",
+      3.6548104614952948e-06
+    ],
+    [
+      "pyth_wins_183",
+      2.4365403076265224e-06
+    ],
+    [
+      "BB",
+      1.21827015375775e-06
+    ],
+    [
+      "G",
+      1.21827015375775e-06
+    ],
+    [
+      "HRA",
+      1.21827015375775e-06
+    ],
+    [
+      "pyth_wins_200",
+      1.21827015375775e-06
+    ],
+    [
+      "pyth_exp_190",
+      0.0
+    ],
+    [
+      "pyth_exp_200",
+      0.0
+    ],
+    [
+      "pyth_wins_190",
+      0.0
+    ],
+    [
+      "FP",
+      -1.2182701538687724e-06
+    ],
+    [
+      "run_ratio",
+      -1.2182701539797947e-06
+    ],
+    [
+      "SV",
+      -2.4365403077375447e-06
+    ],
+    [
+      "SO_per_G",
+      -4.873080615364067e-06
+    ]
+  ],
+  "ratio_results": [
+    {
+      "ratio": 0.8,
+      "kept_features": [
+        "SO_per_G",
+        "SV",
+        "run_ratio",
+        "FP",
+        "pyth_exp_190",
+        "pyth_exp_200",
+        "pyth_wins_190",
+        "BB",
+        "G",
+        "HRA",
+        "pyth_wins_200",
+        "pyth_wins_183",
+        "H",
+        "RA",
+        "pyth_exp_183",
+        "SLG",
+        "SOA",
+        "run_diff_per_game",
+        "OPS",
+        "HR",
+        "SO",
+        "ER",
+        "E",
+        "run_diff",
+        "H_per_G",
+        "ERA",
+        "DP",
+        "HR_per_G",
+        "WHIP",
+        "OBP",
+        "R",
+        "K_per_9",
+        "CG",
+        "SHO",
+        "AB",
+        "BA"
+      ],
+      "kept_count": 36,
+      "chronological_mae": 2.87474434841957,
+      "group_mae": 2.837855158776075,
+      "group_best_alpha": 0.5
+    },
+    {
+      "ratio": 0.4,
+      "kept_features": [
+        "SO_per_G",
+        "SV",
+        "run_ratio",
+        "FP",
+        "pyth_exp_190",
+        "pyth_exp_200",
+        "pyth_wins_190",
+        "BB",
+        "G",
+        "HRA",
+        "pyth_wins_200",
+        "pyth_wins_183",
+        "H",
+        "RA",
+        "pyth_exp_183",
+        "SLG",
+        "SOA",
+        "run_diff_per_game"
+      ],
+      "kept_count": 18,
+      "chronological_mae": 2.9952031946942164,
+      "group_mae": 3.026043069241064,
+      "group_best_alpha": 12.0
+    },
+    {
+      "ratio": 0.6,
+      "kept_features": [
+        "SO_per_G",
+        "SV",
+        "run_ratio",
+        "FP",
+        "pyth_exp_190",
+        "pyth_exp_200",
+        "pyth_wins_190",
+        "BB",
+        "G",
+        "HRA",
+        "pyth_wins_200",
+        "pyth_wins_183",
+        "H",
+        "RA",
+        "pyth_exp_183",
+        "SLG",
+        "SOA",
+        "run_diff_per_game",
+        "OPS",
+        "HR",
+        "SO",
+        "ER",
+        "E",
+        "run_diff",
+        "H_per_G",
+        "ERA",
+        "DP"
+      ],
+      "kept_count": 27,
+      "chronological_mae": 3.004726417961105,
+      "group_mae": 3.016413791609151,
+      "group_best_alpha": 0.75
+    },
+    {
+      "ratio": 0.7,
+      "kept_features": [
+        "SO_per_G",
+        "SV",
+        "run_ratio",
+        "FP",
+        "pyth_exp_190",
+        "pyth_exp_200",
+        "pyth_wins_190",
+        "BB",
+        "G",
+        "HRA",
+        "pyth_wins_200",
+        "pyth_wins_183",
+        "H",
+        "RA",
+        "pyth_exp_183",
+        "SLG",
+        "SOA",
+        "run_diff_per_game",
+        "OPS",
+        "HR",
+        "SO",
+        "ER",
+        "E",
+        "run_diff",
+        "H_per_G",
+        "ERA",
+        "DP",
+        "HR_per_G",
+        "WHIP",
+        "OBP",
+        "R"
+      ],
+      "kept_count": 31,
+      "chronological_mae": 3.007894737895557,
+      "group_mae": 3.0088551059343223,
+      "group_best_alpha": 12.0
+    },
+    {
+      "ratio": 0.5,
+      "kept_features": [
+        "SO_per_G",
+        "SV",
+        "run_ratio",
+        "FP",
+        "pyth_exp_190",
+        "pyth_exp_200",
+        "pyth_wins_190",
+        "BB",
+        "G",
+        "HRA",
+        "pyth_wins_200",
+        "pyth_wins_183",
+        "H",
+        "RA",
+        "pyth_exp_183",
+        "SLG",
+        "SOA",
+        "run_diff_per_game",
+        "OPS",
+        "HR",
+        "SO",
+        "ER"
+      ],
+      "kept_count": 22,
+      "chronological_mae": 3.0163544353698852,
+      "group_mae": 3.0275871739579854,
+      "group_best_alpha": 12.0
+    }
+  ],
+  "best_ratio": {
+    "ratio": 0.8,
+    "kept_features": [
+      "SO_per_G",
+      "SV",
+      "run_ratio",
+      "FP",
+      "pyth_exp_190",
+      "pyth_exp_200",
+      "pyth_wins_190",
+      "BB",
+      "G",
+      "HRA",
+      "pyth_wins_200",
+      "pyth_wins_183",
+      "H",
+      "RA",
+      "pyth_exp_183",
+      "SLG",
+      "SOA",
+      "run_diff_per_game",
+      "OPS",
+      "HR",
+      "SO",
+      "ER",
+      "E",
+      "run_diff",
+      "H_per_G",
+      "ERA",
+      "DP",
+      "HR_per_G",
+      "WHIP",
+      "OBP",
+      "R",
+      "K_per_9",
+      "CG",
+      "SHO",
+      "AB",
+      "BA"
+    ],
+    "kept_count": 36,
+    "chronological_mae": 2.87474434841957,
+    "group_mae": 2.837855158776075,
+    "group_best_alpha": 0.5
+  },
+  "best_alpha_stable": 8.0,
+  "best_alpha_stable_chrono_mae": 2.9288289863810064,
+  "best_alpha_full": 8.0,
+  "best_alpha_full_chrono_mae": 2.9789618190860994,
+  "blend_lambda": 0.30000000000000004,
+  "submission_file": "submission_champion_temporal_drift.csv",
+  "stable_feature_count": 36,
+  "total_feature_count": 45
+}

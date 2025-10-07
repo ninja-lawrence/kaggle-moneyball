@@ -1,0 +1,18 @@
+{
+  "best_alpha": 2.0,
+  "time_mae_groupkfold": 2.8325787412697574,
+  "random_mae_mean": 2.7749788309160253,
+  "chron_mae_mean": 3.0044349621556643,
+  "group_oof_mae_full": 2.8292422511988486,
+  "importance_weighted_time_mae": 2.8555149121495043,
+  "adversarial_auc": 0.9999001018473848,
+  "importance_weight_stats": {
+    "mean": 0.11492975077653657,
+    "std": 0.07885605151371133,
+    "min": 0.0044742091994680495,
+    "max": 0.5964364836187556
+  },
+  "decade_offsets": {},
+  "decade_calibration_status": "skipped_missing_yearID",
+  "feature_count": 45
+}

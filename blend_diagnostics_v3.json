@@ -1,0 +1,23 @@
+{
+  "selected_models": [
+    "M5"
+  ],
+  "weights": [
+    1.0
+  ],
+  "oof_mae": 2.7710463459734864,
+  "individual_oof": {
+    "M5": 2.7710463459734864
+  },
+  "residual_corr": [
+    [
+      1.0
+    ]
+  ],
+  "config": {
+    "ENABLE_MODEL4_WINPCT": false,
+    "ENABLE_MODEL5_ENET": true,
+    "ENABLE_MODEL6_LASSO": true,
+    "ENABLE_RESIDUAL_TRIMMING": false
+  }
+}
